@@ -1,0 +1,34 @@
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: hello-server
+  profiles:
+    active: dev
+
+local:
+  serverId: ${spring.application.name}
+
+# actuator 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启所有端点
+        include: "*"
+  endpoint:
+    health:
+      # health 显示详细信息
+      show-details: always
+    # 开启shutdown端点，true 开启
+    shutdown:
+      enabled: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:1111/eureka/,http://peer2:1112/eureka/
