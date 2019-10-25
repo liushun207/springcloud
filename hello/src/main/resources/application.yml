@@ -28,7 +28,10 @@ management:
     # 开启shutdown端点，true 开启
     shutdown:
       enabled: false
+
+# eureka 服务注册配置
 eureka:
   client:
     service-url:
+      # 指定注册中心
       defaultZone: http://peer1:1111/eureka/,http://peer2:1112/eureka/
