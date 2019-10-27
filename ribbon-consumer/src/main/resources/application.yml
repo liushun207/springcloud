@@ -4,8 +4,43 @@ server:
 spring:
   application:
     name: ribbon-consumer
+  cloud:
+    loadbalancer:
+      retry:
+        # 重试机制，默认是开启的
+        enabled: true
 
 eureka:
+  instance:
+    metadata-map:
+      # 设置区域
+      zone: shenzhen
   client:
     service-url:
       defaultZone: http://peer1:1111/eureka/
+
+
+# 重试机制的配置
+
+# 断路器`hystrix`的超时时间需要大于ribbon的超时时间，不然不会触发重试。
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+hello-server:
+  ribbon:
+    #请求连接的超时时间
+    ConnectTimeout: 250
+    #请求处理的超时时间
+    ReadTimeout: 1000
+    #对所有操作请求都进行重试
+    OkToRetryOnAllOperations: true
+    #切换实例的重试次数
+    MaxAutoRetriesNextServer: 2
+    #对当前实例的重试次数
+    MaxAutoRetries: 1
+    #根据如上配置，当访问到故障请求的时候，它会再尝试访问一次当前实例
