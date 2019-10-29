@@ -36,14 +36,8 @@ public class UserCommand extends HystrixCommand<User> {
         return new User();
     }
 
-    /**
-     * 开启 Hystrix 请求缓存功能
-     * 1. 减轻高并发时的请求线程消耗
-     * 2. 降低请求响应时间
-     * @return
-     */
     @Override
-    protected String getCacheKey(){
+    protected String getCacheKey() {
         return String.valueOf(id);
     }
 }

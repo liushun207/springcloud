@@ -19,17 +19,35 @@ eureka:
     service-url:
       defaultZone: http://peer1:1111/eureka/
 
+# actuator 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启所有端点 或者仪表盘只需要 hystrix.stream
+        include: "*"
+  endpoint:
+    health:
+      # health 显示详细信息
+      show-details: always
+    # 开启shutdown端点，true 开启
+    shutdown:
+      enabled: false
 
 # 重试机制的配置
 
-# 断路器`hystrix`的超时时间需要大于ribbon的超时时间，不然不会触发重试。
 hystrix:
   command:
     default:
+      # 开启请求缓存 默认开启， 1降低请求线程消耗 2 降低请求响应
+      requestCache:
+        enabled: true
       execution:
+        # 断路器`hystrix`的超时时间需要大于ribbon的超时时间，不然不会触发重试。
         isolation:
           thread:
             timeoutInMilliseconds: 3000
+
 
 #ribbon:
 #  #请求连接的超时时间

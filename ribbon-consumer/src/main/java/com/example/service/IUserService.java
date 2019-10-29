@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.entity.User;
 import rx.Observable;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -31,4 +32,24 @@ public interface IUserService {
      * @return the user by id async
      */
     Observable<User> getUserById(final String id);
+
+    /**
+     * Update.
+     * @param user the user
+     */
+    void update(User user);
+
+    /**
+     * Find user.
+     * @param id the id
+     * @return the user
+     */
+    User find(Long id);
+
+    /**
+     * Find all list.
+     * @param ids the ids
+     * @return the list
+     */
+    List<User> findAll(List<Long> ids);
 }

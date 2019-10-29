@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: turbine
+
+server:
+  port: 8989
+
+# actuator \u914D\u7F6E
+management:
+  endpoints:
+    web:
+      exposure:
+        # \u5F00\u542F\u6240\u6709\u7AEF\u70B9 \u6216\u8005\u4EEA\u8868\u76D8\u53EA\u9700\u8981 hystrix.stream
+        include: "*"
+  endpoint:
+    health:
+      # health \u663E\u793A\u8BE6\u7EC6\u4FE1\u606F
+      show-details: always
+
+eureka:
+#  instance:
+#    metadata-map:
+#      # \u8BBE\u7F6E\u533A\u57DF
+#      zone: shenzhen
+  client:
+    service-url:
+      defaultZone: http://peer1:1111/eureka/
+
+turbine:
+  # \u591A\u4E2A\u4EE5`,`\u9694\u5F00
+  app-config: RIBBON-CONSUMER
+  # \u6307\u5B9A\u96C6\u7FA4\u540D\u79F0 default
+  cluster-name-expression: new String("default")
+  combine-host-port: true

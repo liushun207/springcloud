@@ -2,19 +2,19 @@ package com.example.web;
 
 import com.example.entity.User;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * HelloController
+ * 测试用例，参数未校验
  * @author liushun
  * @since JDK 1.8
  **/
@@ -48,5 +48,30 @@ public class HelloController {
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable Long id) {
         return new User(id, "张三 - " + id, 20);
+    }
+
+    @GetMapping("/users")
+    public List<User> getUserById(String ids) {
+        if(StringUtils.isBlank(ids)){
+            return null;
+        }
+
+        String[] split = ids.split(",");
+        int len = split.length;
+
+        List<User> users = new ArrayList<>(len);
+
+        for(int i = 0; i < len; i++) {
+            String id = split[i];
+            User entity = new User(Long.parseLong(id), "张三 - " + id, 20);
+            users.add(entity);
+        }
+
+        return users;
+    }
+
+    @PostMapping("/users")
+    public User getUserById(User user) {
+        return user;
     }
 }
