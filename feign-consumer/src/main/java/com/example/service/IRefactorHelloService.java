@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.hystrix.HelloServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
@@ -7,7 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  * 如：IHelloServiceTest 中的定义
  * @author liushun
  */
-@FeignClient("hello-server")
+@FeignClient(value = "hello-server", fallback = HelloServiceFallback.class)
 public interface IRefactorHelloService extends IHelloService {
 
 }

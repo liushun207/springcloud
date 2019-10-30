@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
  * 公共接口
  * @author liushun
  */
-@RequestMapping("/refactor")
 public interface IHelloService {
 
     /**
@@ -15,7 +14,7 @@ public interface IHelloService {
      * @param name the name
      * @return the string
      */
-    @GetMapping("/hello4")
+    @GetMapping("/refactor/hello4")
     String hello(@RequestParam String name);
 
     /**
@@ -24,7 +23,7 @@ public interface IHelloService {
      * @param age the age
      * @return the user
      */
-    @GetMapping("/hello5")
+    @GetMapping("/refactor/hello5")
     User hello(@RequestHeader String name, @RequestHeader Integer age);
 
     /**
@@ -33,6 +32,6 @@ public interface IHelloService {
      * @return the string
      * @throws Exception the exception
      */
-    @PostMapping("/hello6")
+    @PostMapping("/refactor/hello6")
     String hello(@RequestBody User user);
 }
