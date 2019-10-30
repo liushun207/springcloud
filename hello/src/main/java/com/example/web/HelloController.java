@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 测试用例，参数未校验
@@ -37,9 +36,10 @@ public class HelloController {
         // 让处理线程等待几秒钟，由于Hystrix默认超时时间是2000，所以采用0到3000的随机数，让处理过程有一定的概率发生超时来触发断路器；
         // int sleepTime = new Random().nextInt(3000);
 
-        int sleepTime = new Random().ints(1251, 1300).findFirst().getAsInt();
-        log.info("sleepTime:" + sleepTime);
-        Thread.sleep(sleepTime);
+        // 测试重试机制
+        // int sleepTime = new Random().ints(1251, 1300).findFirst().getAsInt();
+        // log.info("sleepTime:" + sleepTime);
+        // Thread.sleep(sleepTime);
 
         log.info("/hello, host:" + instance.getHost() + ", service_id:" + instance.getServiceId());
         return "hello world";
@@ -52,7 +52,7 @@ public class HelloController {
 
     @GetMapping("/users")
     public List<User> getUserById(String ids) {
-        if(StringUtils.isBlank(ids)){
+        if(StringUtils.isBlank(ids)) {
             return null;
         }
 
@@ -73,5 +73,20 @@ public class HelloController {
     @PostMapping("/users")
     public User getUserById(User user) {
         return user;
+    }
+
+    @GetMapping("/hello1")
+    public String hello(@RequestParam String name) throws Exception {
+        return "hello " + name;
+    }
+
+    @GetMapping("/hello2")
+    public User hello(@RequestHeader String name, @RequestHeader Integer age) throws Exception {
+        return new User(1L, name, age);
+    }
+
+    @PostMapping("/hello3")
+    public String hello(@RequestBody User user) throws Exception {
+        return "hello " + user.getName() + " ," + user.getAge();
     }
 }
