@@ -1,0 +1,78 @@
+server:
+  port: 9020
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: api-gateway
+  # 当遇到同样名字bean的时候，是否允许定义重写
+  main:
+    allow-bean-definition-overriding: true
+
+#  profiles:
+#    active: dev
+
+# eureka 服务注册配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:1111/eureka/
+
+hystrix:
+  command:
+    default:
+      # 开启请求缓存 默认开启， 1降低请求线程消耗 2降低请求响应
+      requestCache:
+        enabled: true
+      execution:
+        # 断路器`hystrix`的超时时间需要大于`ribbon`的超时时间(连接和处理)，不然不会触发重试。
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+# 全局配置
+ribbon:
+  #请求连接的超时时间，
+  ConnectTimeout: 250
+  #请求处理的超时时间
+  ReadTimeout: 1000
+  #对所有操作请求都进行重试
+  OkToRetryOnAllOperations: true
+  #切换实例的重试次数
+  MaxAutoRetriesNextServer: 2
+  #对当前实例的重试次数
+  MaxAutoRetries: 1
+  #根据如上配置，当访问到故障请求的时候，它会再尝试访问一次当前实例
+
+# 路由规则是有序的
+# 默认路由规则 zuul.routes.hello-server(服务名) = /hello-server(服务名)/**
+# 网关路由自定义配置
+zuul:
+#  # 配置不创建所有服务的路由
+#  ignored-services: *
+# 忽略的路由表达式
+#  ignored-patterns: /**/hello/**
+#  routes:
+#    # 使用 path和serviceId 配置路由时
+#    # 对于路由的转发的请求不会采用HystrixCommand包装，
+#    # 所以这类请求没有线程隔离和断路器的包含
+#    api-a:
+##      # 对指定路由设置开启自定义敏感头
+##      customSensitiveHeaders: true
+##      # 将指定的敏感头设置为空
+##      sensitiveHeaders:
+#      path: /api-a/**
+#      serviceId: hello-server
+#    api-b:
+#      path: /api-b/**
+#      serviceId: feign-consumer
+  # 用于确定代理是否转发主机头的标志
+  add-host-header: true
+  # 开启全局重试，如果服务消费者已经开启的重试 这里可以不设置 否者会出现 翻倍的请求
+  # 如此处的配置 每次失败多请求1次（实际是2次） 再切换2次实例 每次也是2  一共是 2 + (2*2) = 6
+  # 服务消费者也是同样的配置的话 就会出现 6 * 6 = 36次请求
+#  retryable: true
+
