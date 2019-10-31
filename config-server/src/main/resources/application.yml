@@ -1,0 +1,14 @@
+server:
+  port: 9030
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/xxx/xxx.git
+          search-paths: config-repo
+          username: xxx
+          password: xxx
+
