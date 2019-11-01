@@ -1,0 +1,13 @@
+# 必须配置在此文件中，这样 config-server 的信息才会正确加载
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      # 配置 config-server 配置文件 分支 地址
+      profile: dev
+      label: master
+      uri: http://localhost:9030
+
+server:
+  port: 9040
