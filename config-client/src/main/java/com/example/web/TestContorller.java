@@ -19,6 +19,9 @@ public class TestContorller {
     @Autowired
     private Environment environment;
 
+    /**
+     * 动态配置里面的信息
+     */
     @Value("${from}")
     private String from;
 

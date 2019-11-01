@@ -1,14 +1,47 @@
 server:
   port: 9030
+
 spring:
   application:
     name: config-server
+  # 配置权限
+  security:
+    user:
+      name: admin
+      password: 123456789
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/xxx/xxx.git
+#          uri: https://github.com/liushun207/springcloud
+          # 动态配置, application 为客户端的application名称
+          uri: https://github.com/xxx/{application}
+          # 配置仓库子目录存储
           search-paths: config-repo
           username: xxx
           password: xxx
+          # 指定clone本地存储的文件夹
+#          basedir: xxxx
+        # 配置健康监测，配置动态uri时使用，防止监控检测为DOWM
+        health:
+          repositories:
+            check:
+              name: springcloud
+              lable: master
+              profiles: default
+
+# actuator 配置
+management:
+#  endpoints:
+#    web:
+#      exposure:
+#        # 开启所有端点
+#        include: "*"
+  endpoint:
+    health:
+      # health 显示详细信息
+      show-details: always
+#    # 开启shutdown端点，true 开启
+#    shutdown:
+#      enabled: false
 

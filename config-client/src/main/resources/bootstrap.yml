@@ -1,13 +1,17 @@
 # 必须配置在此文件中，这样 config-server 的信息才会正确加载
 spring:
   application:
-    name: config-client
+    # 由于服务是动态路由，所以这里设置为项目名称
+    name: springcloud
   cloud:
     config:
       # 配置 config-server 配置文件 分支 地址
       profile: dev
       label: master
       uri: http://localhost:9030
+      # 配置权限
+      username: admin
+      password: 123456789
 
 server:
   port: 9040
