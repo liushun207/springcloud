@@ -8,10 +8,26 @@ spring:
       # 配置 config-server 配置文件 分支 地址
       profile: dev
       label: master
-      uri: http://localhost:9030
+#      uri: http://localhost:9030
       # 配置权限
       username: admin
       password: 123456789
+      # 开启服务发现
+      discovery:
+        enabled: true
+        service-id: config-server
+      # 开启 减少等待启动时间，优先判断config-server获取是否正常，并快速响应失败
+      # 开启重试时 必须配置
+      fail-fast: true
+      retry:
+        # 最大重试次数。默认6次
+        max-attempts: 6
 
 server:
   port: 9040
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:1111/eureka/
+

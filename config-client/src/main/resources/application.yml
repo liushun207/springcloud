@@ -1,1 +1,11 @@
-
+# actuator 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启所有端点
+        include: "*"
+  endpoint:
+    health:
+      # health 显示详细信息
+      show-details: always
