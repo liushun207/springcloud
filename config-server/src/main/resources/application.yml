@@ -47,9 +47,6 @@ spring:
 
 # actuator 配置
 management:
-  #刷新时，关闭安全验证
-  security:
-    enabled: false
   endpoints:
     web:
       exposure:
