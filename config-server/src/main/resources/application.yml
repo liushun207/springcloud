@@ -17,6 +17,7 @@ spring:
     config:
       server:
         native:
+          # 本地地址
           search-locations: file:E:\workspace\springcloud\config-repo
     #        git:
 ##          uri: https://github.com/liushun207/springcloud
