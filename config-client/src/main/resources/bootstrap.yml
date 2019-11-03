@@ -3,7 +3,11 @@ spring:
   application:
     # 由于服务是动态路由，所以这里设置为项目名称
     name: springcloud
+
   cloud:
+    bus:
+      trace:
+        enabled: true
     config:
       # 配置 config-server 配置文件 分支 地址
       profile: dev
@@ -22,6 +26,13 @@ spring:
       retry:
         # 最大重试次数。默认6次
         max-attempts: 6
+      #对应的是配置文件规则中的{application}部分
+      name: native
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: springcloud
+    password: 123456
 
 server:
   port: 9040
@@ -30,4 +41,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://peer1:1111/eureka/
-

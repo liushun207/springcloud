@@ -9,3 +9,4 @@ management:
     health:
       # health 显示详细信息
       show-details: always
+
