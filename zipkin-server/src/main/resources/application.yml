@@ -1,0 +1,18 @@
+server:
+  port: 9060
+
+spring:
+  application:
+    name: zipkin-server
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: springcloud
+    password: 123456
+
+management:
+  metrics:
+    web:
+      # zipkin\u542F\u52A8\u62A5\u9519\u65E0\u6CD5\u8BBF\u95EE\u7684\u89E3\u51B3\u65B9\u6CD5
+      server:
+        auto-time-requests: false

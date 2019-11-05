@@ -11,6 +11,27 @@ spring:
   # 开启bean重写
   main:
     allow-bean-definition-overriding: true
+  # 服务跟踪，默认0.1 在开发期间设置为1 全部收集
+  sleuth:
+    sampler:
+      probability: 1
+  # 直接收集
+  zipkin:
+    base-url: http://localhost:9060
+#    sender: rabbit
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: springcloud
+#    password: 123456
+#    # 这里配置了重试策略
+#    listener:
+#      direct:
+#        retry:
+#          enabled: true
+#      simple:
+#        retry:
+#          enabled: true
 
 #  profiles:
 #    active: dev
@@ -71,3 +92,5 @@ feign:
       min-request-size: 2048
     response:
       enabled: true
+
+# 服务跟踪

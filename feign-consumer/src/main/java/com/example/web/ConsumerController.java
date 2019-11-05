@@ -3,6 +3,7 @@ package com.example.web;
 import com.example.entity.User;
 import com.example.service.IHelloServiceTest;
 import com.example.service.IRefactorHelloService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since JDK 1.8
  **/
 @RestController
+@Log4j2
 public class ConsumerController {
     @Autowired
     private IHelloServiceTest helloServiceTest;
@@ -41,8 +43,9 @@ public class ConsumerController {
     public String helloConsumer3() {
         StringBuilder sb = new StringBuilder();
         // sb.append(refactorHelloService.hello("DIDI")).append("\n");
-        sb.append(refactorHelloService.hello("DIDI", 20)).append("\n");
+        // sb.append(refactorHelloService.hello("DIDI", 20)).append("\n");
         sb.append(refactorHelloService.hello(new User(1L, "DIDI", 30))).append("\n");
+        log.info(sb.toString());
         return sb.toString();
     }
 

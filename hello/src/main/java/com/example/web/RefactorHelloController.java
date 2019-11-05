@@ -44,6 +44,8 @@ public class RefactorHelloController implements IHelloService {
 
     @Override
     public String hello(@RequestBody User user) {
-        return "hello " + user.getName() + " ," + user.getAge();
+        String str = "hello " + user.getName() + " ," + user.getAge();
+        log.info(str);
+        return str;
     }
 }
