@@ -9,28 +9,35 @@ spring:
     port: 5672
     username: springcloud
     password: 123456
+#    # 开启confirms模式
+#    publisher-confirms: true
+#    publisher-returns: true
   cloud:
     stream:
-      bindings:
-        # input 通道设置 分组 topic   与 output 一致
-        input:
-          group: hello1
-          destination: raw-sensor-data
-          # 开启消费者分区功能
-          consumer:
-            partitioned: true
-          # json字符串
-          # content-type: application/json
-        # output 通道设置 分组 topic
-        output:
-          group: hello1
-          destination: raw-sensor-data
-          # 多开几个端 分开配置消费者 生产者
-#          producer:
-#            # 指定分区键的表达式规则，支持SpEL
-#            partition-key-expression: payload
-#            # 消息分区的数量
-#            partition-count: 2
+      rabbit:
+        bindings:
+          # input 通道设置 分组 topic   与 output 一致
+          input:
+            group: hello1
+            destination: raw-sensor-data
+            # 开启消费者分区功能
+            consumer:
+              partitioned: true
+              # 设置路由键
+              binding-routing-key: "#"
+            # json字符串
+            # content-type: application/json
+          # output 通道设置 分组 topic
+          output:
+            group: hello1
+            destination: raw-sensor-data
+            # 多开几个端 分开配置消费者 生产者
+            producer:
+#              confirmAckChannel: "DirectChannel"
+      #              # 指定分区键的表达式规则，支持SpEL
+#              partition-key-expression: payload
+#              # 消息分区的数量
+#              partition-count: 2
       # 设置消息分区的消费端节点数量为2
       instance-count: 2
       # 设置当前消费者的总实例数量 默认值 0
