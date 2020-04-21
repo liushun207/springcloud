@@ -14,6 +14,7 @@ spring:
 #    publisher-returns: true
   cloud:
     stream:
+      # 换一种配置方式更好，去掉 rabbit:  参考不同的mq源配置
       rabbit:
         bindings:
           # input 通道设置 分组 topic   与 output 一致
